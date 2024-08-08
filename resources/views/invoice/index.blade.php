@@ -37,7 +37,13 @@
                                         <td><strong>#{{ $row->id }}</strong></td>
                                         <td>{{ $row->customer->name }}</td>
                                         <td>{{ $row->customer->phone }}</td>
-                                        <td><span class="badge badge-success">{{ $row->detail->first()->qty }} Item</span>
+                                        <td>
+                                            @if ($row->detail && $row->detail->first())
+                                                <span class="badge badge-success">{{ $row->detail->first()->qty }}
+                                                    Item</span>
+                                            @else
+                                                <span class="badge badge-warning">No Items</span>
+                                            @endif
                                         </td>
                                         <td>Rp {{ number_format($row->total) }}</td>
                                         <td>Rp {{ number_format($row->tax) }}</td>
@@ -47,7 +53,7 @@
                                                 align="center">
                                                 @csrf
                                                 <input type="hidden" name="_method" value="DELETE">
-                                                <button class="btn btn-danger  btn-xs"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
 
                                                 <a href="{{ route('invoice.edit', $row->id) }}"
                                                     class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
@@ -65,6 +71,7 @@
                                         <td colspan="8" class="text-center">Tidak ada data</td>
                                     </tr>
                                 @endforelse
+
                             </tbody>
                         </table>
                         <div class="float-right">

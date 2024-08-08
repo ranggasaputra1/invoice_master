@@ -95,8 +95,7 @@
                                                         <form action="{{ route('invoice.destroy', $detail->id) }}"
                                                             method="POST" align="center">
                                                             @csrf
-                                                            <input type="hidden" name="_method" value="DELETE"
-                                                                class="form-control">
+                                                            <input type="hidden" name="_method" value="DELETE">
                                                             <button class="btn btn-danger btn-xs"><i
                                                                     class="fa fa-trash"></i></button>
                                                         </form>
@@ -111,10 +110,10 @@
                                             <tr>
                                                 <td></td>
                                                 <td>
-                                                    <input type="hidden" name="_method" value="PUT"
-                                                        class="form-control">
+                                                    <input type="hidden" name="_method" value="PUT" class="form-control"
+                                                        required>
                                                     <select name="product_id" class="form-control">
-                                                        <option value="">Pilih Produk</option>
+
                                                         @foreach ($products as $product)
                                                             <option value="{{ $product->id }}">{{ $product->title }}
                                                             </option>

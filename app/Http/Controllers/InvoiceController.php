@@ -103,11 +103,16 @@ class InvoiceController extends Controller
         }
 
         public function destroy($id)
-        {
-            $invoice = Invoice::find($id);
-            $invoice->delete();
-            return redirect()->back()->with(['success' => 'Data telah dihapus']);
-        }
+{
+    $invoice = Invoice::find($id);
+    if ($invoice) {
+        $invoice->delete();
+        return redirect()->back()->with(['success' => 'Data telah dihapus']);
+    } else {
+        return redirect()->back()->with(['error' => 'Data tidak ditemukan']);
+    }
+}
+
 
         
 }
