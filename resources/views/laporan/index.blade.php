@@ -12,6 +12,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-body">
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        <form action="{{ url('/laporan') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <button class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-download-alt"></i> Tarik Laporan</button>
+                            </div>
+                        </form>
+                    </div>
                     <div class="x_content">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -27,25 +40,17 @@
                                 <th>PPN Masukan</th>
                                 <th>Total</th>
                                 <th>Status</th>
-                                <th>Aksi</th>
                             </tr>
                             </thead>
                             <tbody>
                                 @forelse($laporans as $laporan)
                                 <tr>
-                                    <td>{{ $laporan->title }}</td>
-                                    <td>{{ $laporan->description }}</td>
-                                    <td>Rp {{ number_format($laporan->price) }}</td>
-                                    <td>{{ $laporan->stock }}</td>
-                                    <td>{{ $laporan->created_at->format('d-m-Y') }}</td>
-                                    <td>
-                                        <form action="{{ url('/laporan/' . $laporan->id) }}" method="POST" align="center">
-                                            @csrf
-                                            <input type="hidden" name="_method" value="DELETE" class="form-control">
-                                            <a href="{{ url('/laporan/' . $laporan->id) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a> 
-                                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
-                                        </form>
-                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($laporan->tax_due)->format('F') }}</td>
+                                    <td>Rp {{ number_format($laporan->amount_paid) }}</td>
+                                    <td>Rp {{ number_format($laporan->ppn_out) }}</td>
+                                    <td>Rp {{ number_format($laporan->ppn_in) }}</td>
+                                    <td>Rp {{ number_format($laporan->total) }}</td>
+                                    <td>{{ $laporan->status }}</td>
                                 </tr>
                                 @empty
                                 <tr>

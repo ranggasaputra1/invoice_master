@@ -4,14 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-   public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderBy('created_at', 'DESC')->get();
-        // CODE DIATAS SAMA DENGAN > select * from `products` order by `created_at` desc
-        return view('products.index', compact('products'));
+        // Ambil semua kategori unik
+        $categories = DB::table('products')->pluck('categories')->unique();
+
+        // Ambil kategori yang dipilih dari parameter query
+        $selectedCategory = $request->query('category');
+
+        // Ambil produk berdasarkan kategori yang dipilih, atau semua produk jika tidak ada kategori yang dipilih
+        $products = Product::when($selectedCategory, function ($query, $selectedCategory) {
+            return $query->where('categories', $selectedCategory);
+        })->orderBy('created_at', 'DESC')->get();
+
+        return view('products.index', compact('products', 'categories'));
     }
 
     public function create()
@@ -23,6 +33,7 @@ class ProductController extends Controller
     {
        $request->validate([
             'title' => 'required|string|max:100',
+            'categories' => 'required|string|max:200',
             'description' => 'required|string',
             'price' => 'required|numeric',
             'stock' => 'required|numeric'
@@ -32,6 +43,7 @@ class ProductController extends Controller
         {
             $product = Product::create([
                 'title' => $request->title,
+                'categories' => $request-> categories,
                 'description' => $request->description,
                 'price' => $request->price,
                 'stock' => $request->stock
@@ -57,6 +69,7 @@ class ProductController extends Controller
 
         $product->update([
             'title' => $request->title,
+            'categories' => $request-> categories,
             'description' => $request->description,
             'price' => $request->price,
             'stock' => $request->stock

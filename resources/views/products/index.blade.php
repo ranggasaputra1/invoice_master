@@ -7,11 +7,37 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h3 class="card-title">Data Produk</h3> <a href="{{ url('/product/new') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah Data</a>
+                            <div class="col-md-6 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h3 class="card-title">Data Produk</h3>
+                                    <a href="{{ url('/product/new') }}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-plus"></i> Tambah Data
+                                    </a>
+                                </div>
+                        
+                                <div class="dropdown">
+                                    <form action="{{ url('/product') }}" method="GET">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Search by Categories
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            @foreach ($categories as $category)
+                                                <li>
+                                                    <button type="submit" name="category" value="{{ $category }}" class="dropdown-item">
+                                                        {{ $category }}
+                                                    </button>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </form>
+                                </div>
+                                
                             </div>
                         </div>
+                        
                     </div>
+
+                    
                     <div class="x_content">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -22,6 +48,7 @@
                             <thead>
                                 <tr>
                                     <th>Nama Produk</th>
+                                    <th>Kategori Produk</th>
                                     <th>Deskripsi</th>
                                     <th>Harga</th>
                                     <th>Stok</th>
@@ -33,6 +60,7 @@
                                 @forelse($products as $product)
                                 <tr>
                                     <td>{{ $product->title }}</td>
+                                    <td>{{ $product->categories }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>Rp {{ number_format($product->price) }}</td>
                                     <td>{{ $product->stock }}</td>
