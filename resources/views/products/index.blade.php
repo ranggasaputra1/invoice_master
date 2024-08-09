@@ -14,30 +14,35 @@
                                         <i class="fa fa-plus"></i> Tambah Data
                                     </a>
                                 </div>
-                        
-                                <div class="dropdown">
+
+                                <div class="dropdown mt-3">
                                     <form action="{{ url('/product') }}" method="GET">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Search by Categories
+                                        <button class="btn btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Search By Category
                                         </button>
                                         <ul class="dropdown-menu">
                                             @foreach ($categories as $category)
                                                 <li>
-                                                    <button type="submit" name="category" value="{{ $category }}" class="dropdown-item">
+                                                    <a class="dropdown-item"
+                                                        href="{{ url('/product?category=' . $category) }}">
                                                         {{ $category }}
-                                                    </button>
+                                                    </a>
                                                 </li>
                                             @endforeach
                                         </ul>
                                     </form>
+
+
+
                                 </div>
-                                
+
                             </div>
                         </div>
-                        
+
                     </div>
 
-                    
+
                     <div class="x_content">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -58,26 +63,28 @@
                             </thead>
                             <tbody>
                                 @forelse($products as $product)
-                                <tr>
-                                    <td>{{ $product->title }}</td>
-                                    <td>{{ $product->categories }}</td>
-                                    <td>{{ $product->description }}</td>
-                                    <td>Rp {{ number_format($product->price) }}</td>
-                                    <td>{{ $product->stock }}</td>
-                                    <td>{{ $product->created_at->format('d-m-Y') }}</td>
-                                    <td>
-                                        <form action="{{ url('/product/' . $product->id) }}" method="POST" align="center">
-                                            @csrf
-                                            <input type="hidden" name="_method" value="DELETE" class="form-control">
-                                            <a href="{{ url('/product/' . $product->id) }}" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a> 
-                                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $product->title }}</td>
+                                        <td>{{ $product->categories }}</td>
+                                        <td>{{ $product->description }}</td>
+                                        <td>Rp {{ number_format($product->price) }}</td>
+                                        <td>{{ $product->stock }}</td>
+                                        <td>{{ $product->created_at->format('d-m-Y') }}</td>
+                                        <td>
+                                            <form action="{{ url('/product/' . $product->id) }}" method="POST"
+                                                align="center">
+                                                @csrf
+                                                <input type="hidden" name="_method" value="DELETE" class="form-control">
+                                                <a href="{{ url('/product/' . $product->id) }}"
+                                                    class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></a>
+                                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                 @empty
-                                <tr>
-                                    <td class="text-center" colspan="6">Tidak ada data</td>
-                                </tr>
+                                    <tr>
+                                        <td class="text-center" colspan="6">Tidak ada data</td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table>
