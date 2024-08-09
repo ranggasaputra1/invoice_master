@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\LaporanController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,7 @@ Route::middleware(['auth', 'ceklevel:admin,keuangan,direktur'])->group(function(
     // Laporan routes
     Route::prefix('laporan')->group(function() {
         Route::get('/', 'LaporanController@index')->name('laporan.index');
+        Route::get('/laporan-cetak', 'LaporanController@cetak')->name('laporan.cetak');
         Route::post('/', 'LaporanController@store');
     });
 });
@@ -91,6 +93,8 @@ Route::middleware(['auth', 'ceklevel:admin,keuangan,direktur'])->group(function(
         Route::post('/', 'data_userController@save');
     });
 
-// Route Cetak Rekapan Invoice Keluaran
+    // Route Cetak Rekapan Invoice Keluaran
     Route::get('/cetak{id}', 'invoice_cetakController@cetakPDF')->name('cetak');
+
+
 

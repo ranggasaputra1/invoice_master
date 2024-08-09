@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Laporan;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanController extends Controller
 {
@@ -12,6 +13,14 @@ class LaporanController extends Controller
         $laporans = Laporan::get();
         return view('laporan.index', compact('laporans'));
     }
+
+    public function cetak()
+    {
+        $laporans = Laporan::all();
+        $pdf = PDF::loadView('laporan.cetak', compact('laporans'));
+        return $pdf->stream('Refcool Mitra Teknik | laporan.pdf');
+    }
+
 
     public function store(Request $request)
     {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CV. Refcool Mitra Teknik | Print Invoice</title>
+    <title>CV. Refcool Mitra Teknik | Print Laporan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -88,70 +88,50 @@
                 <p class="m-0">www.serviceacbandungcimahi.com</p>
                 <p class="m-0">085321480170</p>
                 <p class="m-0">Apeprefac@gmail.com</p>
-            </div>
+            </div> <br>
 
         </div>
 
         <div class="info">
-            <p><strong>DIKIRIM KEPADA:</strong> {{ $invoice->customer->name }}</p>
             <p>
-                <strong>PENAWARAN CUCI CLEANING AC & PENAMBAHAN FREON #</strong> {{ $invoice->id }}
+                <strong>Laporan Kurang Bayar Atau Lebih Setor</strong>
             </p>
         </div>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th>Barang</th>
-                    <th>Kuantitas</th>
-                    <th>Harga</th>
-                    <th>Jumlah</th>
+                    <th>Masa Pajak</th>
+                    <th>SubTotal</th>
+                    <th>PPN Keluaran</th>
+                    <th>PPN Masukan</th>
+                    <th>Total</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($invoice->detail as $detail)
+                @forelse($laporans as $laporan)
                     <tr>
-                        <td>{{ $detail->product->title }}<br>
-                            <small>
-                                Rp {{ number_format($detail->price) }}/unit
-                            </small>
-                        </td>
-                        <td>{{ $detail->qty }}</td>
-                        <td>Rp {{ number_format($detail->price) }}</td>
-                        <td>Rp {{ number_format($detail->qty * $detail->price) }}</td>
+                        <td>{{ \Carbon\Carbon::parse($laporan->tax_due)->format('F') }}</td>
+                        <td>Rp {{ number_format($laporan->amount_paid) }}</td>
+                        <td>Rp {{ number_format($laporan->ppn_out) }}</td>
+                        <td>Rp {{ number_format($laporan->ppn_in) }}</td>
+                        <td>Rp {{ number_format($laporan->total) }}</td>
+                        <td>{{ $laporan->status }}</td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td class="text-center" colspan="6">Tidak ada data</td>
+                    </tr>
+                @endforelse
+            </tbody>
 
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3">Subtotal</td>
-                    <td>{{ number_format($invoice->total) }}</td>
-                </tr>
-                <tr>
-                    <td colspan="3">PPN 11%</td>
-                    <td>{{ number_format($invoice->tax) }}</td>
-                </tr>
-                <tr>
-                    <td colspan="3">Total</td>
-                    <td>Rp {{ number_format($invoice->total_price) }}</td>
-                </tr>
-            </tfoot>
+
         </table>
         <br />
 
-        <div class="footer">
-            <p>No REK BRI : 0005-0113-2345-500</p>
-            <p>Atas Nama: APEP SOLIHIN</p>
-            <p>No REK BCA: 1393615081</p>
-            <p>Atas Nama: APEP SOLIHIN</p>
-        </div>
         <hr>
-
-        <p>
-            Dengan menandatangani dokumen ini, pelanggan setuju dengan layanan dan
-            persyaratan yang tercantum dalam dokumen ini.
-        </p>
 
         <div class="grid row justify-content-between mt-5">
             <p class="col text-center">REFCOOL MITRA TEKNIK</p> <br>
@@ -161,11 +141,6 @@
                     alt="Logo" />
             </center><br><br>
 
-            <hr style="width: 20%; margin: 0 auto; border: 1px solid black;">
-        </div><br>
-
-        <div class="grid row justify-content-between mt-5 w-100">
-            <p class="col text-center">{{ $invoice->customer->name }}</p> <br><br><br>
             <hr style="width: 20%; margin: 0 auto; border: 1px solid black;">
         </div>
     </div>

@@ -22,7 +22,7 @@ class invoice_cetakController extends Controller
     $pdf = PDF::loadView('invoice.cetak', compact('invoice'));
 
     // Tampilkan PDF di browser
-    return $pdf->stream('invoice_' . $id . '.pdf');
+    return $pdf->stream('Refcool Mitra Teknik | invoice_keluaran' . $id . '.pdf');
 }
 
 }
