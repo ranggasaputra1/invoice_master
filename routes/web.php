@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -77,6 +78,7 @@ Route::middleware(['auth', 'ceklevel:admin,keuangan,direktur'])->group(function(
     // Laporan routes
     Route::prefix('laporan')->group(function() {
         Route::get('/', 'LaporanController@index')->name('laporan.index');
+        Route::post('/', 'LaporanController@store');
     });
 });
     // Data User routes

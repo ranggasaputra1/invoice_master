@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('laporans', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount_paid', 15, 2); // Jumlah yang dibayar
-            $table->decimal('tax_due', 15, 2);     // Pajak yang seharusnya dibayar
+            $table->decimal('ppn_in', 15, 2); // Jumlah yang dibayar
+            $table->decimal('ppn_out', 15, 2); // Jumlah yang dibayar
+            $table->decimal('total', 15, 2); // Jumlah yang dibayar
+            $table->string('status'); // Jumlah yang dibayar
+            $table->date('tax_due');
             $table->timestamps();
         });
     }

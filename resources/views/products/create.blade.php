@@ -22,6 +22,11 @@
                                 <p class="text-danger">{{ $errors->first('title') }}</p>
                             </div>
                             <div class="form-group">
+                                <label for="">Kategori Produk</label>
+                                <input type="text" name="categories" class="form-control {{ $errors->has('categories') ? 'is-invalid':'' }}" placeholder="Masukkan nama produk">
+                                <p class="text-danger">{{ $errors->first('categories') }}</p>
+                            </div>
+                            <div class="form-group">
                                 <label for="">Deskripsi</label>
                                 <textarea name="description" cols="10" rows="10" class="form-control {{ $errors->has('description') ? 'is-invalid':'' }}"></textarea>
                                 <p class="text-danger">{{ $errors->first('description') }}</p>
