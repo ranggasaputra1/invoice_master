@@ -15,8 +15,8 @@ class invoice_cetakController extends Controller
 
     public function cetakPDF($id)
 {
-    // Ambil data invoice berdasarkan ID
-    $invoice = Invoice::with(['customer', 'detail'])->findOrFail($id);
+    // Ambil data invoice dengan relasi customer, detail, dan product
+    $invoice = Invoice::with(['customer', 'detail.product'])->findOrFail($id);
 
     // Buat PDF dari view
     $pdf = PDF::loadView('invoice.cetak', compact('invoice'));

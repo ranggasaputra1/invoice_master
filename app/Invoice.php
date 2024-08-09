@@ -33,4 +33,10 @@ class Invoice extends Model
         //Invoice memiliki hubungan hasMany ke table invoice_detail
         return $this->hasMany(Invoice_detail::class);
     }
+
+        // Model InvoiceDetail
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

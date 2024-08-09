@@ -1,154 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cetak Invoice</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Penawaran Cuci Cleaning AC & Penambahan Freon</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            font-size: 14px;
-            margin: 0;
+            font-family: roboto, sans-serif;
+            margin: 20px;
             padding: 0;
-            color: #333;
+            font-size: 10px;
         }
 
         .container {
-            margin: 20px auto;
-            max-width: 900px;
-        }
-
-        .card {
-            border-radius: 10px;
-            overflow: hidden;
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .card-header {
-            padding: 15px;
-            color: #fff;
-            border-bottom: 1px solid #e8e8e8;
-        }
-
-        .card-title {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .x_content {
             padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
         }
+
 
         .table {
             width: 100%;
-            border-collapse: collapse;
             margin-top: 15px;
+            border-collapse: collapse;
         }
 
         .table th,
         .table td {
-            text-align: center;
-            vertical-align: middle;
-            padding: 12px;
             border: 1px solid #ddd;
+            padding: 6px;
+            text-align: left;
         }
 
         .table th {
-            background-color: #343a40;
-            color: #fff;
+            background-color: #f2f2f2;
+            font-size: 10px;
+        }
+
+        .table td {
+            font-size: 10px;
+        }
+
+        .table tfoot td {
             font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.875rem;
+            font-size: 10px;
         }
 
-        .table tbody tr:hover {
-            background-color: #f1f1f1;
+
+        .footer {
+            margin-top: 20px;
+            font-size: 10px;
+            color: #666;
+            text-align: left;
+
         }
 
-        .table tbody tr:nth-child(even) {
-            background-color: #fafafa;
-        }
-
-        .badge-success {
-            background-color: #28a745;
-            color: #fff;
-            font-size: 0.875rem;
-            padding: 5px 10px;
-            border-radius: 12px;
-        }
-
-        h3 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: #333;
-        }
-
-        .float-right {
-            margin-top: 15px;
-            text-align: right;
-        }
-
-        @media (max-width: 768px) {
-            .card-title {
-                font-size: 1.25rem;
-            }
-
-            .x_content {
-                padding: 10px;
-            }
-
-            .table th,
-            .table td {
-                padding: 8px;
-            }
-
-            .badge-success {
-                font-size: 0.75rem;
-            }
+        hr {
+            border: 1px solid black;
+            margin: 20px 0;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <center>
-            <h3>CV. Refcoll Mitra Teknik</h3>
-        </center>
-        <div class="card shadow-sm">
-            <div class="card-header">
-                <h3 class="card-title">Cetak Invoice</h3>
+    <div class="container overflow-hidden">
+        <div class=" grid row justify-content-between w-100 ">
+            <img class="col my-start" style="max-width: 150px; max-height: 150px"
+                src="https://www.serviceacbandungcimahi.com/wp-content/uploads/2022/07/logo-service-ac-bandung-rev-1.png"
+                alt="Logo" />
+            <div class="text-end col-8">
+                <h5 class="m-0 fw-bold">
+                    PENAWARAN CUCI CLEANING AC & <br />
+                    PENAMBAHAN FREON
+                </h5>
+                <p class="m-0"><b>REFCOOL MITRA TEKNIK</b></p>
+                <p class="m-0">
+                    Jl. Pojok utara 2 Gg.abu bakar 2 Rt 04/ Rw 05 Kel.setiamanah <br />
+                    Kec.Cimahi tengah <br />
+                    Cimahi Jawa barat 40524
+                </p>
+                <p class="m-0">ID</p>
+                <br />
+                <p class="m-0">www.serviceacbandungcimahi.com</p>
+                <p class="m-0">085321480170</p>
+                <p class="m-0">Apeprefac@gmail.com</p>
             </div>
-            <div class="x_content">
-                <table id="datatable" class="table table-hover table-striped table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nama Lengkap</th>
-                            <th>No Telp</th>
-                            <th>Total Item</th>
-                            <th>Subtotal</th>
-                            <th>Pajak</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ $invoice->id }}</td>
-                            <td>{{ $invoice->customer->name }}</td>
-                            <td>{{ $invoice->customer->phone }}</td>
-                            <td><span class="badge badge-success">{{ $invoice->detail->first()->qty }} Item</span></td>
-                            <td>Rp {{ number_format($invoice->total) }}</td>
-                            <td>Rp {{ number_format($invoice->tax) }}</td>
-                            <td>Rp {{ number_format($invoice->total) }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="float-right"></div>
-            </div>
+
+        </div>
+
+        <div class="info">
+            <p><strong>DIKIRIM KEPADA:</strong> {{ $invoice->customer->name }}</p>
+            <p>
+                <strong>PENAWARAN CUCI CLEANING AC & PENAMBAHAN FREON #</strong> {{ $invoice->id }}
+            </p>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Barang</th>
+                    <th>Kuantitas</th>
+                    <th>Harga</th>
+                    <th>Jumlah</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($invoice->detail as $detail)
+                    <tr>
+                        <td>{{ $detail->product->title }}<br>
+                            <small>
+                                Rp {{ number_format($detail->price) }}/unit
+                            </small>
+                        </td>
+                        <td>{{ $detail->qty }}</td>
+                        <td>Rp {{ number_format($detail->price) }}</td>
+                        <td>Rp {{ number_format($detail->qty * $detail->price) }}</td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Subtotal</td>
+                    <td>{{ number_format($invoice->total) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">PPN 11%</td>
+                    <td>{{ number_format($invoice->tax) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Total</td>
+                    <td>Rp {{ number_format($invoice->total_price) }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <br />
+
+        <div class="footer">
+            <p>No REK BRI : 0005-0113-2345-500</p>
+            <p>Atas Nama: APEP SOLIHIN</p>
+            <p>No REK BCA: 1393615081</p>
+            <p>Atas Nama: APEP SOLIHIN</p>
+        </div>
+        <hr>
+
+        <p>
+            Dengan menandatangani dokumen ini, pelanggan setuju dengan layanan dan
+            persyaratan yang tercantum dalam dokumen ini.
+        </p>
+
+        <div class="grid row justify-content-between mt-5">
+            <p class="col text-center">REFCOOL MITRA TEKNIK</p> <br>
+            <center>
+                <img class="col text-center" style="max-width: 60px; max-height:50px"
+                    src="https://www.serviceacbandungcimahi.com/wp-content/uploads/2022/07/logo-service-ac-bandung-rev-1.png"
+                    alt="Logo" />
+            </center><br><br>
+
+            <hr style="width: 20%; margin: 0 auto; border: 1px solid black;">
+        </div><br>
+
+        <div class="grid row justify-content-between mt-5 w-100">
+            <p class="col text-center">{{ $invoice->customer->name }}</p> <br><br><br>
+            <hr style="width: 20%; margin: 0 auto; border: 1px solid black;">
         </div>
     </div>
 </body>
