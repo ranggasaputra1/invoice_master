@@ -35,6 +35,7 @@ class LaporanController extends Controller
                     $existingReport->ppn_in = $existingReport->calculatePPNIn($month, $currentYear); // Menghitung PPN In
                     $existingReport->ppn_out = $existingReport->calculatePPNOut($month, $currentYear); // Menghitung PPN Out
                     $existingReport->status = $this->calculateStatus($existingReport->ppn_out, $existingReport->ppn_in);
+                    $existingReport->total = $existingReport->ppn_out - $existingReport->ppn_in; // Menghitung PPN Out
                     $existingReport->save();
                 }
                 continue;
