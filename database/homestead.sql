@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Agu 2024 pada 04.05
+-- Waktu pembuatan: 09 Agu 2024 pada 12.42
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -78,10 +78,28 @@ CREATE TABLE `invoice_details` (
 CREATE TABLE `laporans` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `amount_paid` decimal(15,2) NOT NULL,
-  `tax_due` decimal(15,2) NOT NULL,
+  `ppn_in` decimal(15,2) NOT NULL,
+  `ppn_out` decimal(15,2) NOT NULL,
+  `total` decimal(15,2) NOT NULL,
+  `status` varchar(191) NOT NULL,
+  `tax_due` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `laporans`
+--
+
+INSERT INTO `laporans` (`id`, `amount_paid`, `ppn_in`, `ppn_out`, `total`, `status`, `tax_due`, `created_at`, `updated_at`) VALUES
+(1, 0.00, 0.00, 0.00, 0.00, 'Lunas', '2024-01-01', '2024-08-09 03:37:29', '2024-08-09 03:37:29'),
+(2, 0.00, 0.00, 0.00, 0.00, 'Lunas', '2024-02-01', '2024-08-09 03:37:29', '2024-08-09 03:37:29'),
+(3, 0.00, 0.00, 0.00, 0.00, 'Lunas', '2024-03-01', '2024-08-09 03:37:29', '2024-08-09 03:37:29'),
+(4, 0.00, 0.00, 0.00, 0.00, 'Lunas', '2024-04-01', '2024-08-09 03:37:29', '2024-08-09 03:37:29'),
+(5, 0.00, 0.00, 0.00, 0.00, 'Lunas', '2024-05-01', '2024-08-09 03:37:29', '2024-08-09 03:37:29'),
+(6, 0.00, 0.00, 0.00, 0.00, 'Lunas', '2024-06-01', '2024-08-09 03:37:29', '2024-08-09 03:37:29'),
+(7, 0.00, 0.00, 0.00, 0.00, 'Lunas', '2024-07-01', '2024-08-09 03:37:29', '2024-08-09 03:37:29'),
+(8, 0.00, 0.00, 0.00, 0.00, 'Lunas', '2024-08-01', '2024-08-09 03:37:29', '2024-08-09 03:37:41');
 
 -- --------------------------------------------------------
 
@@ -171,6 +189,7 @@ CREATE TABLE `personal_access_tokens` (
 CREATE TABLE `products` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) NOT NULL,
+  `categories` varchar(191) NOT NULL,
   `description` text NOT NULL,
   `price` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
@@ -193,7 +212,7 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `level` varchar(191) DEFAULT NULL
+  `level` varchar(191) DEFAULT 'admin'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -201,9 +220,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `level`) VALUES
-(1, 'admin', 'admin@gmail.com', NULL, '$2y$10$2AMLT.f.WFS7OvsI5ycAn.lRMebRTphEn.HceAaFy8nf2WXxBNy2i', NULL, '2024-08-07 17:09:46', '2024-08-07 17:09:46', 'admin'),
-(2, 'keuangan', 'keuangan@gmail.com', NULL, '$2y$10$Mh56zvY39JK2mFH6UJKc6.FNcfOaBfxJ1OFkkqc3281ufOywFoehC', NULL, '2024-08-07 17:11:50', '2024-08-07 17:11:50', 'keuangan'),
-(3, 'direktur', 'direktur@gmail.com', NULL, '$2y$10$xZwhdbKq.5/VYYGD1T.TfesG9z1c/JFuyj2wPJVlK3HrFWpt2BgpK', NULL, '2024-08-07 18:06:05', '2024-08-07 18:46:51', 'direktur');
+(1, 'admin', 'admin@gmail.com', NULL, '$2y$10$HO/kBYE/MnD0oY9fWkljeOrGYY6C1eNjchRMaM3E74Zcwng10BEFG', NULL, '2024-08-09 03:18:09', '2024-08-09 03:18:09', 'admin'),
+(2, 'keuangan', 'keuangan@gmail.com', NULL, '$2y$10$R6SpAVA3Ohh90TE8KH78zuhqLjW0LnsHBikL2cYu173hk5IlKoFQi', NULL, '2024-08-09 03:39:39', '2024-08-09 03:40:13', 'keuangan'),
+(3, 'direktur', 'direktur@gmail.com', NULL, '$2y$10$v/b6FNzHkdNx4IJ5foU3a.sDCKUJSoYzNLoeAcssB9stD9.H/lejq', NULL, '2024-08-09 03:40:44', '2024-08-09 03:41:22', 'direktur');
 
 --
 -- Indexes for dumped tables
@@ -302,7 +321,7 @@ ALTER TABLE `invoice_details`
 -- AUTO_INCREMENT untuk tabel `laporans`
 --
 ALTER TABLE `laporans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `masukans`
@@ -332,7 +351,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
